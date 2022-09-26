@@ -28,7 +28,7 @@ class Auction
     def bidders
         bidders = Array.new
         items_with_bids.each do |item|
-            item.bids.keys.map { |bidder| bidders.push(bidder.name) }.uniq
+            item.bids.keys.map { |bidder| bidders.push(bidder.name) }
         end
         bidders.uniq
     end
@@ -37,7 +37,7 @@ class Auction
         bidders_hash = Hash.new
         items_with_bids.each do |item|
             item.bids.keys.map do |bidder| 
-                bidders_hash[bidder] = Hash.new {|h,k| h[k] = [] }
+                bidders_hash[bidder] = Hash.new { |h,k| h[k] = [] }
             end
         end
         items_with_bids.each do |item|
@@ -51,4 +51,19 @@ class Auction
         bidders_hash
     end
 
+    def date
+        Date.today.strftime("%d/%m/%Y").to_s
+    end
+
+    def close_auction
+        high_bidder = Hash.new
+        items.each do |item|
+            if item.bids == {}
+                high_bidder[item] = 'Not Sold'
+            else  
+                high_bidder[item] = item.bids.max_by { |bidder, bid| bid }.first
+            end
+        end
+        high_bidder
+    end
 end
