@@ -10,6 +10,6 @@ class Attendee
     end
 
     def budget
-        attendee_hash[:budget][1..-1].to_f
+        attendee_hash[:budget][1..-1].to_i
     end
 end

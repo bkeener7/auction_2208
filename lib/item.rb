@@ -8,10 +8,16 @@ class Item
     end
 
     def add_bid(bidder, bid)
-        bids[bidder] = bid
+        unless bids.frozen?
+            bids[bidder] = bid
+        end
     end
 
     def current_high_bid
         bids.max_by { |bidder, bid| bid }.last
+    end
+
+    def close_bidding
+        bids.freeze
     end
 end
